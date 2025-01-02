@@ -9,7 +9,23 @@ import { API } from "../api/api";
 // '() => AsyncStorage' means that we want the createJSONStorage function to work with AsyncStorage
 const storage = createJSONStorage<AuthState>(() => AsyncStorage);
 
-// arguments of atom: (getterFunc, setterFunc)
+const INITIAL_STATE = {
+  accessToken: null,
+  isLoading: false,
+  error: null,
+};
+
+export const authAtom = atomWithStorage<AuthState>(
+  "auth",
+  INITIAL_STATE,
+  storage,
+);
+
+export const logoutAtom = atom(null, (_get, set) => {
+  set(authAtom, INITIAL_STATE);
+});
+
+// arguments of atom: (getterFunc, setterFunc, args)
 export const loginAtom = atom(
   (get) => get(authAtom),
   async (_get, set, { email, password }: LoginRequest) => {
@@ -38,16 +54,6 @@ export const loginAtom = atom(
       }
     }
   },
-);
-
-export const authAtom = atomWithStorage<AuthState>(
-  "auth",
-  {
-    accessToken: null,
-    isLoading: false,
-    error: null,
-  },
-  storage,
 );
 
 export interface AuthState {
