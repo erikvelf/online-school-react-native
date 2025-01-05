@@ -15,22 +15,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useRootNavigationState } from "expo-router";
 
 export default function MyCoursesPage() {
-  const { accessToken } = useAtomValue(authAtom);
-
-  // A hook that allows us to mount our component after the RootLayout appears
-  const state = useRootNavigationState();
-
-  useEffect(() => {
-    // Don't redirect until we have the key
-    if (!state?.key) {
-      return;
-    }
-
-    if (!accessToken) {
-      router.replace("/login");
-    }
-  }, [accessToken, state]);
-
   return (
     <View>
       <Text>Index</Text>
