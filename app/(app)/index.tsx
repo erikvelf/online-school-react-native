@@ -13,11 +13,14 @@ import {
 } from "../../entities/auth/model/auth.state";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useRootNavigationState } from "expo-router";
+import { Button } from "../../shared/Button/button";
 
 export default function MyCoursesPage() {
+  const logout = useSetAtom(logoutAtom)
   return (
     <View>
       <Text>Index</Text>
+      <Button text="Logout" onPress={logout}>
     </View>
   );
 }

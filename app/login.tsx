@@ -1,51 +1,70 @@
-import { StatusBar } from 'expo-status-bar';
-import { Alert, Image, StyleSheet, Text, View } from 'react-native';
-import { Input } from '../shared/Input/input';
-import { Colors, Gaps, Padding } from '../shared/tokens'
-import { Button } from '../shared/Button/button';
-import { ErrorNotification } from '../shared/ErrorNotification/errorNotification';
-import { useState } from 'react';
-import CustomLink from '../shared/customLink/customLink';
+import { Image, StyleSheet, View } from "react-native";
+import { Input } from "../shared/Input/input";
+import { Colors, Padding } from "../shared/tokens";
+import { Button } from "../shared/Button/button";
+import { ErrorNotification } from "../shared/ErrorNotification/errorNotification";
+import { useEffect, useState } from "react";
+import CustomLink from "../shared/customLink/customLink";
+import { useAtom } from "jotai";
+import { loginAtom } from "../entities/auth/model/auth.state";
+import { router } from "expo-router";
 
 export default function Login() {
-  const [error, setError] = useState<string | undefined>(undefined)
+  const [localError, setLocalError] = useState<string | undefined>(undefined);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
+  const [{ accessToken, error, isLoading }, login] = useAtom(loginAtom);
 
-  const alert = () => {
-    setError('Wrong login or password')
-    // Alert.alert('Wrong login or password')
-  }
+  useEffect(() => {
+    if (accessToken) {
+      router.replace("/");
+    }
+  }, [accessToken]);
+
+  useEffect(() => {
+    if (error) {
+      setLocalError(error);
+    }
+  }, [error]);
+
+  const submitCredentials = () => {
+    // Popup an error notification one or both information fields are empty
+    if (!email || !password) {
+      if (!email && !password) {
+        setLocalError("Email and password not inserted");
+      } else if (!email) {
+        setLocalError("Email not inserted");
+      } else {
+        setLocalError("Password not inserted");
+      }
+      return;
+    }
+
+    login({ email: email, password: password });
+  };
 
   return (
     <View style={styles.container}>
-      <ErrorNotification error={error} />
+      <ErrorNotification error={localError} />
       <View style={styles.content}>
         <Image
-          style={{width: 200}}
-          source={require('../assets/app/logo.png')}
-          resizeMode='contain'
+          style={{ width: 200 }}
+          source={require("../assets/app/logo.png")}
+          resizeMode="contain"
         />
         <View style={styles.form}>
           <Input
-            placeholder='email'
-            keyboardType='email-address'
+            placeholder="email"
+            keyboardType="email-address"
+            onChangeText={setEmail}
           />
-          <Input
-            isPassword
-            placeholder='password'
-          />         
+          <Input isPassword placeholder="password" onChangeText={setPassword} />
 
-          <Button
-            text='Login'
-            onPress={alert}
-          />
+          <Button text="Login" onPress={submitCredentials} />
 
-          <CustomLink
-            href={'/course/ts'}
-            title={'Restore Password'}
-          />
+          <CustomLink href={"/restore"} title={"Restore Password"} />
         </View>
-
       </View>
     </View>
   );
@@ -58,18 +77,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   container: {
-    fontFamily: 'Fira-Sans-Semibold',
+    fontFamily: "Fira-Sans-Semibold",
     flex: 1,
     backgroundColor: Colors.black,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     width: "100%",
-    padding: Padding.p48
+    padding: Padding.p48,
   },
   form: {
     alignSelf: "stretch",
-    gap: 16
-
+    gap: 16,
   },
-
 });
