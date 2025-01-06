@@ -16,11 +16,11 @@ import { router, useRootNavigationState } from "expo-router";
 import { Button } from "../../shared/Button/button";
 
 export default function MyCoursesPage() {
-  const logout = useSetAtom(logoutAtom)
+  const logout = useSetAtom(logoutAtom);
   return (
     <View>
       <Text>Index</Text>
-      <Button text="Logout" onPress={logout}>
+      <Button text="Logout" onPress={logout} />
     </View>
   );
 }
