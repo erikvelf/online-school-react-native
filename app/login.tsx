@@ -61,7 +61,11 @@ export default function Login() {
           />
           <Input isPassword placeholder="password" onChangeText={setPassword} />
 
-          <Button text="Login" onPress={submitCredentials} />
+          <Button
+            isLoading={isLoading}
+            text="Login"
+            onPress={submitCredentials}
+          />
 
           <CustomLink href={"/restore"} title={"Restore Password"} />
         </View>
