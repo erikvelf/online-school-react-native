@@ -1,5 +1,5 @@
 import { View, Text } from "react-native";
-import CustomLink from "../../shared/customLink/customLink";
+import CustomLink from "../../shared/customLink/CustomLink";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { profileAtom } from "../../entities/user/model/user.state";
 import axios from "axios";
@@ -13,7 +13,7 @@ import {
 } from "../../entities/auth/model/auth.state";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router, useRootNavigationState } from "expo-router";
-import { Button } from "../../shared/Button/button";
+import { Button } from "../../shared/Button/Button";
 
 export default function MyCoursesPage() {
   const logout = useSetAtom(logoutAtom);

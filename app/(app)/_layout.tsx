@@ -4,6 +4,7 @@ import { authAtom } from "../../entities/auth/model/auth.state";
 import { Drawer } from "expo-router/drawer";
 import { Colors, Fonts } from "../../shared/tokens";
 import MenuIcon from "../../assets/icons/menu";
+import { MenuButton } from "../../features/layout/ui/MenuButton/MenuButton";
 
 export default function AppLayout() {
   // Promp user to login if he isn't (without rendering the rest of the page)
@@ -19,7 +20,7 @@ export default function AppLayout() {
           backgroundColor: Colors.blackLight,
         },
         headerLeft: () => {
-          return <MenuIcon />;
+          return <MenuButton navigation={navigation} />;
         },
         headerTitleStyle: {
           color: Colors.white,

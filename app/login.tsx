@@ -1,10 +1,10 @@
 import { Image, StyleSheet, View } from "react-native";
-import { Input } from "../shared/Input/input";
+import { Input } from "../shared/Input/Input";
 import { Colors, Padding } from "../shared/tokens";
-import { Button } from "../shared/Button/button";
-import { ErrorNotification } from "../shared/ErrorNotification/errorNotification";
+import { Button } from "../shared/Button/Button";
+import { ErrorNotification } from "../shared/ErrorNotification/ErrorNotification";
 import { useEffect, useState } from "react";
-import CustomLink from "../shared/customLink/customLink";
+import CustomLink from "../shared/customLink/CustomLink";
 import { useAtom } from "jotai";
 import { loginAtom } from "../entities/auth/model/auth.state";
 import { router } from "expo-router";

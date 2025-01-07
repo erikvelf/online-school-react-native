@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View } from "react-native";
-import CustomLink from "../shared/customLink/customLink";
+import CustomLink from "../shared/customLink/CustomLink";
 import { Colors, Fonts, Padding } from "../shared/tokens";
 
 export default function UnmatchedCustom() {
