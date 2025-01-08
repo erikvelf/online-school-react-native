@@ -50,7 +50,7 @@ export default function Login() {
       <View style={styles.content}>
         <Image
           style={{ width: 200 }}
-          source={require("../assets/app/logo.png")}
+          source={require("../assets/logo.png")}
           resizeMode="contain"
         />
         <View style={styles.form}>

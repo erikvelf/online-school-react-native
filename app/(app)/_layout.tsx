@@ -1,10 +1,11 @@
-import { Redirect, Stack } from "expo-router";
+import { Redirect } from "expo-router";
 import { useAtomValue } from "jotai";
 import { authAtom } from "../../entities/auth/model/auth.state";
 import { Drawer } from "expo-router/drawer";
 import { Colors, Fonts } from "../../shared/tokens";
-import MenuIcon from "../../assets/icons/menu";
 import { MenuButton } from "../../features/layout/ui/MenuButton/MenuButton";
+import { CustomDrawer } from "../../entities/layout/ui/CustomDrawer/CustomDrawer";
+import React from "react";
 
 export default function AppLayout() {
   // Promp user to login if he isn't (without rendering the rest of the page)
@@ -15,6 +16,7 @@ export default function AppLayout() {
 
   return (
     <Drawer
+      drawerContent={(props) => <CustomDrawer {...props} />}
       screenOptions={({ navigation }) => ({
         headerStyle: {
           backgroundColor: Colors.blackLight,
@@ -29,6 +31,9 @@ export default function AppLayout() {
         },
         headerTitleAlign: "center",
         sceneStyle: {
+          backgroundColor: Colors.black,
+        },
+        drawerContentStyle: {
           backgroundColor: Colors.black,
         },
       })}
