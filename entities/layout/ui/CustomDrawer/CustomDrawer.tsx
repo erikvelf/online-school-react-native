@@ -6,11 +6,18 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { Colors } from "../../../../shared/tokens";
 import CustomLink from "../../../../shared/customLink/CustomLink";
 import { CloseDrawer } from "../CloseDrawer/CloseDrawer";
-import { useSetAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { logoutAtom } from "../../../auth/model/auth.state";
+import { loadProfileAtom } from "../../../user/model/user.state";
+import { useEffect } from "react";
 
 export function CustomDrawer(props: DrawerContentComponentProps) {
   const logout = useSetAtom(logoutAtom);
+  const [profile, loadProfile] = useAtom(loadProfileAtom);
+
+  useEffect(() => {
+    loadProfile();
+  }, []);
   return (
     <DrawerContentScrollView
       {...props}
@@ -18,7 +25,7 @@ export function CustomDrawer(props: DrawerContentComponentProps) {
     >
       <View style={styles.content}>
         <CloseDrawer {...props.navigation} />
-        <Text>text</Text>
+        <Text style={{ color: "white" }}>{profile.profile?.name}</Text>
       </View>
 
       {/* future footer */}
