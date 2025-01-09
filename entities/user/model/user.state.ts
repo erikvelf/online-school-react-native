@@ -1,5 +1,5 @@
 import { atom, useAtom } from "jotai";
-import { User } from "./user.model";
+import { User, UserRequest } from "./user.model";
 import { authAtom } from "../../auth/model/auth.state";
 import axios, { AxiosError } from "axios";
 import { isLoading } from "expo-font";
@@ -27,14 +27,13 @@ export const loadProfileAtom = atom(
     });
 
     try {
-      const { data } = await axios.get<User>(API.profile, {
+      const { data } = await axios.get<UserRequest>(API.profile, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
       });
       set(profileAtom, {
         isLoading: true,
-        // TODO fix profile interface since the api changed a little in how it returns the profile data
         profile: data.profile,
         error: null,
       });
