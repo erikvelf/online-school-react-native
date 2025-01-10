@@ -6,7 +6,7 @@ export default function UnmatchedCustom() {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../assets/not-found.png")}
+        source={require("../assets/images/not-found.png")}
         resizeMode="contain"
         style={styles.image}
       />

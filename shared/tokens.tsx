@@ -23,6 +23,8 @@ export const Fonts = {
   f16: 16,
   f18: 18,
   f20: 20,
+  regular: "FiraSans",
+  regularSemiBold: "Fira-Sans-Semibold",
 };
 
 export const Padding = {
