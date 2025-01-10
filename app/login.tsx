@@ -1,6 +1,6 @@
 import { Image, StyleSheet, View } from "react-native";
 import { Input } from "../shared/Input/Input";
-import { Colors, Padding } from "../shared/tokens";
+import { Colors, Fonts, Padding } from "../shared/tokens";
 import { Button } from "../shared/Button/Button";
 import { ErrorNotification } from "../shared/ErrorNotification/ErrorNotification";
 import { useEffect, useState } from "react";
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   container: {
-    fontFamily: "Fira-Sans-Semibold",
+    fontFamily: Fonts.regularSemiBold,
     flex: 1,
     backgroundColor: Colors.black,
     alignItems: "center",

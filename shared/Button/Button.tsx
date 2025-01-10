@@ -57,6 +57,6 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontWeight: "500",
     fontSize: Fonts.f18,
-    fontFamily: "FiraSans",
+    fontFamily: Fonts.regular,
   },
 });
