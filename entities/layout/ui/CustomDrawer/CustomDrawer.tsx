@@ -11,10 +11,21 @@ import { logoutAtom } from "../../../auth/model/auth.state";
 import { loadProfileAtom } from "../../../user/model/user.state";
 import { useEffect } from "react";
 import UserMenu from "../../../user/ui/UserMenu";
+import { MenuItem } from "../MenuItem/MenuItem";
+
+import ProfileIcon from "../../../../assets/menu/profile";
+import CoursesIcon from "../../../../assets/menu/courses";
+import ClubIcon from "../../../../assets/menu/club";
 
 export function CustomDrawer(props: DrawerContentComponentProps) {
   const logout = useSetAtom(logoutAtom);
   const [profile, loadProfile] = useAtom(loadProfileAtom);
+
+  const Menu = [
+    { text: "Profile", icon: <ProfileIcon />, path: "/(app)" },
+    { text: "Courses", icon: <CoursesIcon />, path: "/profile" },
+    { text: "Club", icon: <ClubIcon />, path: "/club" },
+  ];
 
   useEffect(() => {
     loadProfile();
@@ -27,9 +38,18 @@ export function CustomDrawer(props: DrawerContentComponentProps) {
       <View style={styles.content}>
         <CloseDrawer {...props.navigation} />
         <UserMenu user={profile.profile} />
+
+        <View>
+          {Menu.map((menuProps) => (
+            <MenuItem
+              key={menuProps.path}
+              {...menuProps}
+              navigation={props.navigation}
+            />
+          ))}
+        </View>
       </View>
 
-      {/* future footer */}
       <View style={styles.footer}>
         <CustomLink title="Logout" href={"/login"} onPress={logout} />
         <Image
