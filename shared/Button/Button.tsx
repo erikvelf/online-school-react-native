@@ -4,7 +4,6 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  View,
   ActivityIndicator,
 } from "react-native";
 import { Colors, Fonts, Radius } from "../tokens";

@@ -1,6 +1,5 @@
 import { View, Text } from "react-native";
-import { Link, Stack } from "expo-router";
-import { Colors } from "../shared/tokens";
+import { Link } from "expo-router";
 import { Button } from "../shared/Button/Button";
 
 export default function Restore() {
