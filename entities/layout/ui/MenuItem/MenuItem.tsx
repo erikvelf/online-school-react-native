@@ -1,5 +1,8 @@
 import { Image, View, Text, Pressable } from "react-native";
-import { DrawerNavigationHelpers } from "@react-navigation/drawer/lib/typescript/commonjs/src/types";
+import {
+  DrawerContentComponentProps,
+  DrawerNavigationHelpers,
+} from "@react-navigation/drawer/lib/typescript/commonjs/src/types";
 import { Href, Link, LinkProps } from "expo-router";
 import { StyleSheet } from "react-native";
 import { ReactNode, useState } from "react";
@@ -7,7 +10,7 @@ import { PressableProps } from "react-native";
 import { Colors, Fonts, Gaps, Padding } from "../../../../shared/tokens";
 
 interface MenuItemProps {
-  navigation: DrawerNavigationHelpers;
+  drawer: DrawerContentComponentProps;
   icon: ReactNode;
   text: string;
   path: string;
@@ -15,17 +18,18 @@ interface MenuItemProps {
 }
 
 export function MenuItem({
-  navigation,
+  drawer,
   icon,
   text,
   path,
-  isActive,
   ...rest
 }: MenuItemProps & PressableProps) {
   const [isClicked, setIsClicked] = useState<boolean>(false);
+  // from all routes we select the currently focused route and compare it to the given path to apply a styling that shows if a MenuItem is selected
+  const isActive = drawer.state.routes[drawer.state.index].name === path;
 
   const navigateToPath = () => {
-    navigation.navigate(path);
+    drawer.navigation.navigate(path);
   };
   return (
     <Pressable
@@ -37,7 +41,9 @@ export function MenuItem({
       <View
         style={{
           ...styles.menuItem,
-          backgroundColor: isClicked ? Colors.violetDark : Colors.black,
+          borderColor: isActive ? Colors.primary : Colors.black,
+          backgroundColor:
+            isClicked || isActive ? Colors.violetDark : Colors.black,
         }}
       >
         {icon}
@@ -58,6 +64,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 24,
     paddingVertical: 16,
     alignItems: "center",
+    borderRightWidth: 5,
   },
   text: {
     color: Colors.white,

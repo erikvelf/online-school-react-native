@@ -22,9 +22,9 @@ export function CustomDrawer(props: DrawerContentComponentProps) {
   const [profile, loadProfile] = useAtom(loadProfileAtom);
 
   const Menu = [
-    { text: "Profile", icon: <ProfileIcon />, path: "/(app)" },
-    { text: "Courses", icon: <CoursesIcon />, path: "/profile" },
-    { text: "Club", icon: <ClubIcon />, path: "/club" },
+    { text: "Profile", icon: <ProfileIcon />, path: "profile" },
+    { text: "Courses", icon: <CoursesIcon />, path: "index" },
+    { text: "Club", icon: <ClubIcon />, path: "club" },
   ];
 
   useEffect(() => {
@@ -41,11 +41,7 @@ export function CustomDrawer(props: DrawerContentComponentProps) {
 
         <View>
           {Menu.map((menuProps) => (
-            <MenuItem
-              key={menuProps.path}
-              {...menuProps}
-              navigation={props.navigation}
-            />
+            <MenuItem key={menuProps.path} {...menuProps} drawer={props} />
           ))}
         </View>
       </View>

@@ -36,12 +36,23 @@ export default function AppLayout() {
         drawerContentStyle: {
           backgroundColor: Colors.black,
         },
+        drawerItemStyle: {
+          marginLeft: 0,
+          width: "100%",
+        },
       })}
     >
       <Drawer.Screen
         name="index"
         options={{
           title: "My courses",
+        }}
+      />
+
+      <Drawer.Screen
+        name="profile"
+        options={{
+          title: "Profile",
         }}
       />
     </Drawer>
