@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet } from "react-native";
-import { User } from "../model/user.model";
-import { Colors, Fonts, Gaps } from "../../../shared/tokens";
+import { User } from "../../../../entities/user/model/user.model";
+import { Colors, Fonts, Gaps } from "../../../../shared/tokens";
 
 export default function UserMenu({ user: user }: { user: User | null }) {
   //const userImage = photo?
@@ -13,7 +13,7 @@ export default function UserMenu({ user: user }: { user: User | null }) {
       {user.photo ? (
         <Image source={{ uri: user.photo }} />
       ) : (
-        <Image source={require("../../../assets/images/avatar.png")} />
+        <Image source={require("../../../../assets/images/avatar.png")} />
       )}
       <Text style={styles.name}>{`${user.name} ${user.surname}`}</Text>
     </View>
@@ -22,8 +22,8 @@ export default function UserMenu({ user: user }: { user: User | null }) {
 
 const styles = StyleSheet.create({
   image: {
-    width: 60,
-    height: 60,
+    width: 70,
+    height: 70,
     marginTop: 30,
     marginBottom: 40,
   },

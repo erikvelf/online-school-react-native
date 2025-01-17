@@ -10,12 +10,13 @@ import { useAtom, useSetAtom } from "jotai";
 import { logoutAtom } from "../../../../entities/auth/model/auth.state";
 import { loadProfileAtom } from "../../../../entities/user/model/user.state";
 import { useEffect } from "react";
-import UserMenu from "../../../../entities/user/ui/UserMenu";
+
 import { MenuItem } from "../../../../entities/layout/ui/MenuItem/MenuItem";
 
 import ProfileIcon from "../../../../assets/menu/profile";
 import CoursesIcon from "../../../../assets/menu/courses";
 import ClubIcon from "../../../../assets/menu/club";
+import UserMenu from "../../../../features/layout/ui/UserMenu/UserMenu";
 
 export function CustomDrawer(props: DrawerContentComponentProps) {
   const logout = useSetAtom(logoutAtom);
