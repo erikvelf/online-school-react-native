@@ -1,4 +1,4 @@
-import { Text, Alert, Image, Pressable } from "react-native";
+import { Text, Alert, Pressable } from "react-native";
 import { StyleSheet } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
@@ -10,7 +10,10 @@ import {
 import { Colors, Fonts, Gaps, Radius } from "../tokens";
 import { View } from "react-native";
 import UploadIcon from "../../assets/icons/upload";
-import { Button } from "../Button/Button";
+import FormData from "form-data";
+import axios, { AxiosError } from "axios";
+import { FILE_API } from "../api";
+import { UploadResponse } from "./ImageUploader.interface";
 
 interface ImageUploaderProps {
   onUpload: (uri: string) => void;
@@ -47,6 +50,38 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps) {
     return true;
   };
 
+  const uploadToServer = async (
+    uri: string,
+    fileName: string,
+  ): Promise<null | any> => {
+    const formData = new FormData();
+    formData.append("files", {
+      uri,
+      fileName,
+      type: "image/jpeg",
+    });
+
+    try {
+      const { data } = await axios.post<UploadResponse>(
+        FILE_API.uploadImage,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        },
+      );
+      onUpload(data.urls.original);
+
+      return data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.error(error);
+      }
+      return null;
+    }
+  };
+
   const captureAvatar = async () => {
     const isPerissionGranted = await verifyCameraPermissions();
     if (!isPerissionGranted) {
@@ -78,7 +113,10 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps) {
     if (!result.assets) {
       return;
     }
-    onUpload(result?.assets[0].uri);
+
+    const pickedImageData = result.assets[0];
+    // nullish coalescing operator '??' providing a fallback value if the first value is null or undefined
+    await uploadToServer(pickedImageData.uri, pickedImageData.fileName ?? "");
   };
 
   return (
