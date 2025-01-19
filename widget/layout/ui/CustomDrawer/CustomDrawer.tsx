@@ -2,7 +2,7 @@ import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
 } from "@react-navigation/drawer";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import { Colors } from "../../../../shared/tokens";
 import CustomLink from "../../../../shared/customLink/CustomLink";
 import { CloseDrawer } from "../../../../entities/layout/ui/CloseDrawer/CloseDrawer";
@@ -16,7 +16,7 @@ import { MenuItem } from "../../../../entities/layout/ui/MenuItem/MenuItem";
 import ProfileIcon from "../../../../assets/menu/profile";
 import CoursesIcon from "../../../../assets/menu/courses";
 import ClubIcon from "../../../../assets/menu/club";
-import UserMenu from "../../../../features/layout/ui/UserMenu/UserMenu";
+import UserMenu from "../../../user/ui/UserMenu/UserMenu";
 
 export function CustomDrawer(props: DrawerContentComponentProps) {
   const logout = useSetAtom(logoutAtom);

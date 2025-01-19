@@ -9,19 +9,19 @@ import {
   PermissionStatus,
   useMediaLibraryPermissions,
 } from "expo-image-picker";
-import UserMenu from "../../features/layout/ui/UserMenu/UserMenu";
+import UserMenu from "../../widget/user/ui/UserMenu/UserMenu";
 import { Gaps } from "../../shared/tokens";
+import Avatar from "../../entities/user/ui/Avatar/Avatar";
 
 export default function Profile() {
   const [image, setImage] = useState<string | null>(null);
   return (
     <View style={styles.container}>
-      {image ? (
-        <Image style={styles.image} source={{ uri: image }} />
-      ) : (
-        <Image source={require("../../assets/images/avatar.png")} />
-      )}
-      <ImageUploader onUpload={setImage} />
+      <Avatar image={image} />
+      <ImageUploader
+        onUpload={setImage}
+        onError={(error) => console.log(error)}
+      />
     </View>
   );
 }

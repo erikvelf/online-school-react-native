@@ -17,24 +17,34 @@ import { UploadResponse } from "./ImageUploader.interface";
 
 interface ImageUploaderProps {
   onUpload: (uri: string) => void;
+  onError: (error: string) => void;
 }
 
-export default function ImageUploader({ onUpload }: ImageUploaderProps) {
+export default function ImageUploader({
+  onUpload,
+  onError,
+}: ImageUploaderProps) {
   const [image, setImage] = useState<string | null>(null);
-  const [cameraPermissions, requestCameraPermission] = useCameraPermissions();
   const [libraryPermissions, requestLibraryPermissions] =
     useMediaLibraryPermissions();
 
-  const verifyCameraPermissions = async () => {
-    if (cameraPermissions?.status === PermissionStatus.UNDETERMINED) {
-      const res = await requestCameraPermission();
-      return res.granted;
+  const upload = async () => {
+    const isPermissionGranted = await verifyMediaPermissions();
+    if (!isPermissionGranted) {
+      onError("Not enough permissions");
+      return;
     }
-    if (cameraPermissions?.status === PermissionStatus.DENIED) {
-      Alert.alert("Not enough permissions to acces the camera");
-      return false;
+    const asset = await pickImage();
+    if (!asset) {
+      onError("Image wasn't picked");
+      return;
     }
-    return true;
+    const uploadedUrl = await uploadToServer(asset.uri, asset?.fileName ?? "");
+    if (!uploadedUrl) {
+      onError("Failed to upload the image");
+      return;
+    }
+    onUpload(uploadedUrl);
   };
 
   const askToOpenSettings = async (message: string) => {
@@ -58,14 +68,6 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps) {
   };
 
   const verifyMediaPermissions = async () => {
-    if (
-      libraryPermissions?.status === PermissionStatus.UNDETERMINED &&
-      libraryPermissions.accessPrivileges === "none"
-    ) {
-      const res = await requestLibraryPermissions();
-      return res.granted;
-    }
-
     if (
       libraryPermissions?.status === PermissionStatus.DENIED &&
       libraryPermissions?.accessPrivileges === "none"
@@ -97,9 +99,7 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps) {
           },
         },
       );
-      onUpload(data.urls.original);
-
-      return data;
+      return data.urls.original;
     } catch (error) {
       if (error instanceof AxiosError) {
         console.error(error);
@@ -108,28 +108,7 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps) {
     }
   };
 
-  const captureAvatar = async () => {
-    const isPermissionGranted = await verifyCameraPermissions();
-    if (!isPermissionGranted) {
-      return;
-    }
-    const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ["images"],
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 0.5,
-    });
-    if (!result.assets) {
-      return;
-    }
-    setImage(result?.assets[0].uri);
-  };
-
   const pickImage = async () => {
-    const isPermissionGranted = await verifyMediaPermissions();
-    if (!isPermissionGranted) {
-      return;
-    }
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ["images"],
       allowsEditing: true,
@@ -137,16 +116,13 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps) {
       quality: 0.5,
     });
     if (!result.assets) {
-      return;
+      return null;
     }
-
-    const pickedImageData = result.assets[0];
-    // nullish coalescing operator '??' providing a fallback value if the first value is null or undefined
-    await uploadToServer(pickedImageData.uri, pickedImageData.fileName ?? "");
+    return result.assets[0];
   };
 
   return (
-    <Pressable onPress={pickImage}>
+    <Pressable onPress={upload}>
       <View style={styles.container}>
         <Text style={styles.text}>Upload Image</Text>
         <UploadIcon />
