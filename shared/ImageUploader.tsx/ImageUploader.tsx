@@ -1,4 +1,4 @@
-import { Text, Alert, Pressable } from "react-native";
+import { Text, Alert, Pressable, Linking } from "react-native";
 import { StyleSheet } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { useState } from "react";
@@ -37,14 +37,40 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps) {
     return true;
   };
 
+  const askToOpenSettings = async (message: string) => {
+    Alert.alert(
+      "Open settings", // Title of the alert
+      message, // Message to display
+      [
+        {
+          text: "No", // First option text
+          onPress: () => {
+            return;
+          },
+        },
+        {
+          text: "Yes", // Second option text
+          onPress: () => Linking.openSettings(), // Action to perform when Option 2 is pressed
+        },
+      ],
+      { cancelable: false },
+    );
+  };
+
   const verifyMediaPermissions = async () => {
-    if (libraryPermissions?.status === PermissionStatus.UNDETERMINED) {
+    if (
+      libraryPermissions?.status === PermissionStatus.UNDETERMINED &&
+      libraryPermissions.accessPrivileges === "none"
+    ) {
       const res = await requestLibraryPermissions();
       return res.granted;
     }
 
-    if (libraryPermissions?.status === PermissionStatus.DENIED) {
-      Alert.alert("Not enough permissions to acces the media library");
+    if (
+      libraryPermissions?.status === PermissionStatus.DENIED &&
+      libraryPermissions?.accessPrivileges === "none"
+    ) {
+      await askToOpenSettings("To change media library permissions");
       return false;
     }
     return true;
@@ -83,8 +109,8 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps) {
   };
 
   const captureAvatar = async () => {
-    const isPerissionGranted = await verifyCameraPermissions();
-    if (!isPerissionGranted) {
+    const isPermissionGranted = await verifyCameraPermissions();
+    if (!isPermissionGranted) {
       return;
     }
     const result = await ImagePicker.launchCameraAsync({
@@ -100,8 +126,8 @@ export default function ImageUploader({ onUpload }: ImageUploaderProps) {
   };
 
   const pickImage = async () => {
-    const isPerissionGranted = await verifyMediaPermissions();
-    if (!isPerissionGranted) {
+    const isPermissionGranted = await verifyMediaPermissions();
+    if (!isPermissionGranted) {
       return;
     }
     const result = await ImagePicker.launchImageLibraryAsync({
