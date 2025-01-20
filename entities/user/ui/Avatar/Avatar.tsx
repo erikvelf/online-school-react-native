@@ -1,5 +1,5 @@
 import { Image, StyleSheet } from "react-native";
-import { User } from "../../../../entities/user/model/user.model";
+import React from "react";
 
 export default function Avatar({ image }: { image: string | null }) {
   return (

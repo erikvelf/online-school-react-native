@@ -5,6 +5,7 @@ import axios, { AxiosError } from "axios";
 import { isLoading } from "expo-font";
 import { AuthResponse } from "../../auth/model/auth.interfaces";
 import { API } from "../api/api";
+import { setNativeProps } from "react-native-reanimated";
 
 // by default uses the description of our atom's state
 // setting the default values for the profile atom
@@ -13,6 +14,42 @@ export const profileAtom = atom<UserState>({
   isLoading: false,
   error: null,
 });
+
+export const updateProfileAtom = atom(
+  async (get) => {
+    return get(profileAtom);
+  },
+  async (get, set, { photo }: { photo: string }) => {
+    try {
+      const { accessToken } = await get(authAtom);
+      const { data } = await axios.patch(
+        API.profile,
+        {
+          photo: photo,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      set(profileAtom, {
+        isLoading: false,
+        error: null,
+        profile: data,
+      });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        set(profileAtom, {
+          isLoading: false,
+          profile: null,
+          error: error.response?.data.message,
+        });
+      }
+    }
+  },
+);
 
 export const loadProfileAtom = atom(
   async (get) => {
