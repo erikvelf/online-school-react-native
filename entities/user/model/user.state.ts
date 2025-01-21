@@ -1,11 +1,8 @@
-import { atom, useAtom } from "jotai";
+import { atom } from "jotai";
 import { User, UserRequest } from "./user.model";
 import { authAtom } from "../../auth/model/auth.state";
 import axios, { AxiosError } from "axios";
-import { isLoading } from "expo-font";
-import { AuthResponse } from "../../auth/model/auth.interfaces";
 import { API } from "../api/api";
-import { setNativeProps } from "react-native-reanimated";
 
 // by default uses the description of our atom's state
 // setting the default values for the profile atom

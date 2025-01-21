@@ -1,20 +1,13 @@
-import { View, Text, Alert, Image } from "react-native";
+import { View } from "react-native";
 import { StyleSheet } from "react-native";
 import ImageUploader from "../../shared/ImageUploader.tsx/ImageUploader";
-import * as ImagePicker from "expo-image-picker";
 import { Button } from "../../shared/Button/Button";
 import { useEffect, useState } from "react";
-import {
-  useCameraPermissions,
-  PermissionStatus,
-  useMediaLibraryPermissions,
-} from "expo-image-picker";
-import UserMenu from "../../widget/user/ui/UserMenu/UserMenu";
 import { Gaps } from "../../shared/tokens";
 import Avatar from "../../entities/user/ui/Avatar/Avatar";
 import { useAtom } from "jotai";
 import { updateProfileAtom } from "../../entities/user/model/user.state";
-import { Path } from "react-native-svg";
+import * as Sharing from "expo-sharing";
 
 export default function Profile() {
   const [image, setImage] = useState<string | null>(null);
@@ -33,6 +26,16 @@ export default function Profile() {
     updateProfile({ photo: image });
   };
 
+  const shareProfile = async () => {
+    const isSharingAvalilable = Sharing.isAvailableAsync();
+    if (!isSharingAvalilable) {
+      return;
+    }
+    await Sharing.shareAsync("https://purpleschool.ru", {
+      dialogTitle: "Share",
+    });
+  };
+
   return (
     <View>
       <View style={styles.container}>
@@ -43,6 +46,7 @@ export default function Profile() {
         />
       </View>
       <Button text="Save" onPress={submitProfile} />
+      <Button text="Share" onPress={shareProfile} />
     </View>
   );
 }
