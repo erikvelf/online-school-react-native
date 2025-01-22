@@ -1,6 +1,6 @@
-import { Image, StyleSheet, View } from "react-native";
+import { Dimensions, Image, StyleSheet, View } from "react-native";
 import { Input } from "../shared/Input/Input";
-import { Colors, Fonts, Padding } from "../shared/tokens";
+import { Colors, Fonts, Gaps, Padding } from "../shared/tokens";
 import { Button } from "../shared/Button/Button";
 import { ErrorNotification } from "../shared/ErrorNotification/ErrorNotification";
 import { useEffect, useState } from "react";
@@ -8,11 +8,14 @@ import CustomLink from "../shared/customLink/CustomLink";
 import { useAtom } from "jotai";
 import { loginAtom } from "../entities/auth/model/auth.state";
 import { router } from "expo-router";
+import { useScreenOrientation } from "../shared/hooks";
+import { Orientation } from "expo-screen-orientation";
 
 export default function Login() {
   const [localError, setLocalError] = useState<string | undefined>(undefined);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const orientation = useScreenOrientation();
 
   const [{ accessToken, error, isLoading }, login] = useAtom(loginAtom);
 
@@ -54,12 +57,36 @@ export default function Login() {
           resizeMode="contain"
         />
         <View style={styles.form}>
-          <Input
-            placeholder="email"
-            keyboardType="email-address"
-            onChangeText={setEmail}
-          />
-          <Input isPassword placeholder="password" onChangeText={setPassword} />
+          <View
+            style={{
+              ...styles.inputs,
+              flexDirection:
+                orientation === Orientation.PORTRAIT_UP ? "column" : "row",
+            }}
+          >
+            <Input
+              style={{
+                width:
+                  orientation === Orientation.PORTRAIT_UP
+                    ? "auto"
+                    : Dimensions.get("window").width / 2 - 16 - 2 * 20,
+              }}
+              placeholder="email"
+              keyboardType="email-address"
+              onChangeText={setEmail}
+            />
+            <Input
+              style={{
+                width:
+                  orientation === Orientation.PORTRAIT_UP
+                    ? "auto"
+                    : Dimensions.get("window").width / 2 - 16 - 2 * 20,
+              }}
+              isPassword
+              placeholder="password"
+              onChangeText={setPassword}
+            />
+          </View>
 
           <Button
             isLoading={isLoading}
@@ -92,5 +119,11 @@ const styles = StyleSheet.create({
   form: {
     alignSelf: "stretch",
     gap: 16,
+  },
+  inputs: {
+    gap: Gaps.g16,
+  },
+  input: {
+    width: Dimensions.get("window").width / 2 - 16 - 2 * 20,
   },
 });

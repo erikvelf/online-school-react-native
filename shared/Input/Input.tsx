@@ -12,23 +12,23 @@ import { Colors, Fonts, Radius } from "../tokens";
 
 export function Input(props: TextInputProps & { isPassword?: boolean }) {
   const [isPasswordVisible, setIsPasswordVisible] = useState<boolean>(false);
-  const { isPassword, ...rest } = props;
+  const { isPassword, style, ...rest } = props;
 
   const toggleIsPasswordVisible = () => {
     setIsPasswordVisible((state) => !state);
   };
 
   return (
-    <View>
+    <View style={style}>
       <TextInput
-        style={style.input}
+        style={styles.input}
         {...rest}
         secureTextEntry={isPassword && !isPasswordVisible}
         placeholderTextColor={Colors.gray}
       />
 
       {isPassword && (
-        <Pressable style={style.eyeIcon} onPress={toggleIsPasswordVisible}>
+        <Pressable style={styles.eyeIcon} onPress={toggleIsPasswordVisible}>
           {isPasswordVisible ? <EyeOpenedIcon /> : <EyeClosedIcon />}
         </Pressable>
       )}
@@ -36,7 +36,7 @@ export function Input(props: TextInputProps & { isPassword?: boolean }) {
   );
 }
 
-const style = StyleSheet.create({
+const styles = StyleSheet.create({
   input: {
     backgroundColor: Colors.violetDark,
     fontSize: Fonts.f16,
