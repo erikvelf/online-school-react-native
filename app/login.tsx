@@ -16,6 +16,7 @@ export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const orientation = useScreenOrientation();
+  console.log("ORIENTATION ", orientation);
 
   const [{ accessToken, error, isLoading }, login] = useAtom(loginAtom);
 
@@ -61,27 +62,17 @@ export default function Login() {
             style={{
               ...styles.inputs,
               flexDirection:
-                orientation === Orientation.PORTRAIT_UP ? "column" : "row",
+                orientation === Orientation.PORTRAIT_UP ? "column" : "column",
             }}
           >
             <Input
-              style={{
-                width:
-                  orientation === Orientation.PORTRAIT_UP
-                    ? "auto"
-                    : Dimensions.get("window").width / 2 - 16 - 2 * 20,
-              }}
+              style={{}}
               placeholder="email"
               keyboardType="email-address"
               onChangeText={setEmail}
             />
             <Input
-              style={{
-                width:
-                  orientation === Orientation.PORTRAIT_UP
-                    ? "auto"
-                    : Dimensions.get("window").width / 2 - 16 - 2 * 20,
-              }}
+              style={{}}
               isPassword
               placeholder="password"
               onChangeText={setPassword}
@@ -93,9 +84,8 @@ export default function Login() {
             text="Login"
             onPress={submitCredentials}
           />
-
-          <CustomLink href={"/restore"} title={"Restore Password"} />
         </View>
+        <CustomLink href={"/restore"} title={"Restore Password"} />
       </View>
     </View>
   );
@@ -103,27 +93,25 @@ export default function Login() {
 
 const styles = StyleSheet.create({
   content: {
-    width: "100%",
-    justifyContent: "center",
     alignItems: "center",
+    justifyContent: "center",
+    gap: Gaps.g50,
   },
   container: {
+    height: "75%",
     fontFamily: Fonts.regularSemiBold,
-    flex: 1,
-    backgroundColor: Colors.black,
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
-    padding: Padding.p48,
+    padding: 20,
+    // padding: Padding.p48,
   },
   form: {
+    maxWidth: 400,
+    minWidth: "80%",
     alignSelf: "stretch",
     gap: 16,
   },
   inputs: {
     gap: Gaps.g16,
-  },
-  input: {
-    width: Dimensions.get("window").width / 2 - 16 - 2 * 20,
   },
 });

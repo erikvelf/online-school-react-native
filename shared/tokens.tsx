@@ -32,4 +32,5 @@ export const Fonts = {
 
 export const Padding = {
   p48: 48,
+  p55: 55,
 };
