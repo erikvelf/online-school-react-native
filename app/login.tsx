@@ -16,9 +16,9 @@ export default function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const orientation = useScreenOrientation();
-  console.log("ORIENTATION ", orientation);
 
   const [{ accessToken, error, isLoading }, login] = useAtom(loginAtom);
+  const adaptiveInputWidth = Dimensions.get("window").width / 2 - 16 - 55;
 
   useEffect(() => {
     if (accessToken) {
@@ -62,17 +62,27 @@ export default function Login() {
             style={{
               ...styles.inputs,
               flexDirection:
-                orientation === Orientation.PORTRAIT_UP ? "column" : "column",
+                orientation === Orientation.PORTRAIT_UP ? "column" : "row",
             }}
           >
             <Input
-              style={{}}
+              style={{
+                width:
+                  orientation === Orientation.PORTRAIT_UP
+                    ? "auto"
+                    : adaptiveInputWidth,
+              }}
               placeholder="email"
               keyboardType="email-address"
               onChangeText={setEmail}
             />
             <Input
-              style={{}}
+              style={{
+                width:
+                  orientation === Orientation.PORTRAIT_UP
+                    ? "auto"
+                    : adaptiveInputWidth,
+              }}
               isPassword
               placeholder="password"
               onChangeText={setPassword}
@@ -82,6 +92,10 @@ export default function Login() {
           <Button
             isLoading={isLoading}
             text="Login"
+            style={{
+              alignSelf: "center",
+              width: "100%",
+            }}
             onPress={submitCredentials}
           />
         </View>
@@ -98,16 +112,14 @@ const styles = StyleSheet.create({
     gap: Gaps.g50,
   },
   container: {
-    height: "75%",
     fontFamily: Fonts.regularSemiBold,
-    alignItems: "center",
     justifyContent: "center",
     padding: 20,
     // padding: Padding.p48,
   },
   form: {
     maxWidth: 400,
-    minWidth: "80%",
+    minWidth: "90%",
     alignSelf: "stretch",
     gap: 16,
   },
