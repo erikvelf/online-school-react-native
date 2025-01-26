@@ -20,11 +20,13 @@ export default function MyCoursesPage() {
   }, []);
 
   return (
-    <ScrollView style={styles.wrapper}>
-      {courses.length > 0 &&
-        courses.map((course) => (
-          <CourseCard key={course.id} {...course} title={course.title} />
-        ))}
+    <ScrollView>
+      <View style={styles.wrapper}>
+        {courses.length > 0 &&
+          courses.map((course) => (
+            <CourseCard key={course.id} {...course} title={course.shortTitle} />
+          ))}
+      </View>
     </ScrollView>
   );
 }
