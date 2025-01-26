@@ -1,13 +1,10 @@
-import { StyleSheet, View, Text, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView } from "react-native";
 import { useAtomValue, useSetAtom } from "jotai";
-import { logoutAtom } from "../../entities/auth/model/auth.state";
 import {
   courseAtom,
   loadCourseAtom,
 } from "../../entities/course/model/course.state";
-import { useEvent } from "expo";
 import { useEffect } from "react";
-import { Chip } from "../../shared/Chip";
 import { CourseCard } from "../../entities/course/ui/CourseCard";
 import { Gaps } from "../../shared/tokens";
 

@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 import { Input } from "../shared/Input/Input";
-import { Colors, Fonts, Gaps, Padding } from "../shared/tokens";
+import { Fonts, Gaps } from "../shared/tokens";
 import { Button } from "../shared/Button/Button";
 import { ErrorNotification } from "../shared/ErrorNotification/ErrorNotification";
 import { useEffect, useState } from "react";
