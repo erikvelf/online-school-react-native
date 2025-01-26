@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { StyleSheet, View, Text, ScrollView } from "react-native";
 import { useAtomValue, useSetAtom } from "jotai";
 import { logoutAtom } from "../../entities/auth/model/auth.state";
 import {
@@ -7,6 +7,9 @@ import {
 } from "../../entities/course/model/course.state";
 import { useEvent } from "expo";
 import { useEffect } from "react";
+import { Chip } from "../../shared/Chip";
+import { CourseCard } from "../../entities/course/ui/CourseCard";
+import { Gaps } from "../../shared/tokens";
 
 export default function MyCoursesPage() {
   const { isLoading, error, courses } = useAtomValue(courseAtom);
@@ -17,16 +20,19 @@ export default function MyCoursesPage() {
   }, []);
 
   return (
-    <View>
-      <Text>Index</Text>
+    <ScrollView style={styles.wrapper}>
       {courses.length > 0 &&
-        courses.map((course) => {
-          return (
-            <View key={course.id}>
-              <Text style={{ color: "white" }}>{course.title}</Text>
-            </View>
-          );
-        })}
-    </View>
+        courses.map((course) => (
+          <CourseCard key={course.id} {...course} title={course.title} />
+        ))}
+    </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  wrapper: {
+    flexDirection: "column",
+    gap: Gaps.g20,
+    padding: 20,
+  },
+});
