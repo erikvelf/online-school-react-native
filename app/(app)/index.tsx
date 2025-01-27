@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useAtomValue, useSetAtom } from "jotai";
 import {
   courseAtom,
@@ -6,7 +6,9 @@ import {
 } from "../../entities/course/model/course.state";
 import { useEffect } from "react";
 import { CourseCard } from "../../entities/course/ui/CourseCard";
-import { Gaps } from "../../shared/tokens";
+import { FlatList } from "react-native";
+import { StudentCourseDescription } from "../../entities/course/model/course.model";
+import React from "react";
 
 export default function MyCoursesPage() {
   const { isLoading, error, courses } = useAtomValue(courseAtom);
@@ -16,22 +18,30 @@ export default function MyCoursesPage() {
     loadCourses();
   }, []);
 
-  return (
-    <ScrollView>
-      <View style={styles.wrapper}>
-        {courses.length > 0 &&
-          courses.map((course) => (
-            <CourseCard key={course.id} {...course} title={course.shortTitle} />
-          ))}
+  const renderCourse = ({ item }: { item: StudentCourseDescription }) => {
+    return (
+      <View style={styles.item}>
+        <CourseCard {...item} />
       </View>
-    </ScrollView>
+    );
+  };
+
+  return (
+    // using FlatList instead of ScrollView because it lazy-loads its elements
+    <>
+      {courses.length > 0 && (
+        <FlatList
+          data={courses}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderCourse}
+        />
+      )}
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    flexDirection: "column",
-    gap: Gaps.g20,
+  item: {
     padding: 20,
   },
 });

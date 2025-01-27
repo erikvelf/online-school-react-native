@@ -5,11 +5,8 @@ import { Button } from "../../../shared/Button/Button";
 import { Colors, Fonts, Gaps, Radius } from "../../../shared/tokens";
 
 export function CourseCard({
-  id,
   image,
   title,
-  tariffs,
-  progress,
   courseOnDirection,
 }: StudentCourseDescription) {
   return (
@@ -25,7 +22,9 @@ export function CourseCard({
         <Text style={styles.title}>{title}</Text>
         <View style={styles.chips}>
           {courseOnDirection.length > 0 &&
-            courseOnDirection.map((c) => <Chip text={c.direction.name} />)}
+            courseOnDirection.map((c) => (
+              <Chip key={c.direction.name} text={c.direction.name} />
+            ))}
         </View>
       </View>
       <View style={styles.footer}>
