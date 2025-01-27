@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "column",
     borderRadius: Radius.r10,
-    backgroundColor: Colors.violetDark,
+    backgroundColor: Colors.blackLight,
   },
   image: {
     borderRadius: Radius.r10,

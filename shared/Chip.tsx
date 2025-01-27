@@ -10,7 +10,7 @@ export function Chip({ text }: { text: string }) {
 
 const styles = StyleSheet.create({
   chip: {
-    backgroundColor: Colors.violetDark,
+    backgroundColor: Colors.blackLight,
     paddingVertical: 5,
     paddingHorizontal: 10,
     borderColor: Colors.border,
