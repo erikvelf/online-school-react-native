@@ -12,6 +12,7 @@ import {
 import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "expo-linear-gradient";
 import { CourseProgress } from "../../../../entities/course/ui/CourseProgress/CourseProgress";
+import { TariffStatus } from "../../../../shared/Tariffs/Tariffs";
 
 export function CourseCard({
   image,
@@ -49,25 +50,7 @@ export function CourseCard({
               ),
             )}
         </View>
-
-        {/* Gradient text for telling you tariff */}
-        <MaskedView
-          maskElement={
-            <Text style={styles.tariff}>
-              Tariff &laquo;{tariffs ? tariffs[0].name : "non existent"}&raquo;
-            </Text>
-          }
-        >
-          <LinearGradient
-            colors={["#D77BE5", "#6C38CC"]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 0 }}
-          >
-            <Text style={{ ...styles.tariff, ...styles.tariffWithOpacity }}>
-              Tariff &laquo;{tariffs ? tariffs[0].name : ""}&raquo;
-            </Text>
-          </LinearGradient>
-        </MaskedView>
+        <TariffStatus tariffs={tariffs} />
       </View>
 
       <View style={styles.footer}>
