@@ -1,8 +1,8 @@
 import { Text, View, Image, StyleSheet, Linking } from "react-native";
-import { StudentCourseDescription } from "../model/course.model";
-import { Chip } from "../../../shared/Chip";
-import { Button } from "../../../shared/Button/Button";
-import { Colors, Fonts, Gaps, Radius } from "../../../shared/tokens";
+import { StudentCourseDescription } from "../../../../entities/course/model/course.model";
+import { Chip } from "../../../../shared/Chip";
+import { Button } from "../../../../shared/Button/Button";
+import { Colors, Fonts, Gaps, Radius } from "../../../../shared/tokens";
 import MaskedView from "@react-native-masked-view/masked-view";
 import { LinearGradient } from "expo-linear-gradient";
 
@@ -26,9 +26,11 @@ export function CourseCard({
         <Text style={styles.title}>{title}</Text>
         <View style={styles.chips}>
           {courseOnDirection.length > 0 &&
-            courseOnDirection.map((c) => (
-              <Chip key={c.direction.name} text={c.direction.name} />
-            ))}
+            courseOnDirection.map(
+              (c: { direction: Record<"name", string> }) => (
+                <Chip key={c.direction.name} text={c.direction.name} />
+              ),
+            )}
         </View>
 
         {/* Gradient text for telling you tariff */}
@@ -82,11 +84,13 @@ const styles = StyleSheet.create({
   },
   chips: {
     flexDirection: "row",
-    gap: Gaps.g10,
+    gap: Gaps.g8,
   },
   header: {
     paddingHorizontal: 24,
     paddingVertical: 18,
+    gap: Gaps.g16,
+    paddingTop: 4,
   },
   footer: {
     backgroundColor: Colors.violetDark,

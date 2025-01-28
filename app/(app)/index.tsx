@@ -10,7 +10,7 @@ import {
   loadCourseAtom,
 } from "../../entities/course/model/course.state";
 import { useEffect } from "react";
-import { CourseCard } from "../../entities/course/ui/CourseCard";
+import { CourseCard } from "../../widget/course/ui/CourseCard/CourseCard";
 import { FlatList } from "react-native";
 import { StudentCourseDescription } from "../../entities/course/model/course.model";
 import React from "react";
