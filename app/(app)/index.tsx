@@ -15,6 +15,9 @@ import { FlatList } from "react-native";
 import { StudentCourseDescription } from "../../entities/course/model/course.model";
 import React from "react";
 import { Colors } from "../../shared/tokens";
+import { Button } from "../../shared/Button/Button";
+// importing all code from expo-notifications
+import * as Notifications from "expo-notifications";
 
 export default function MyCoursesPage() {
   const { isLoading, error, courses } = useAtomValue(courseAtom);
@@ -32,9 +35,26 @@ export default function MyCoursesPage() {
     );
   };
 
+  const scheduleNotification = () => {
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Don't forget to leart this course",
+        body: "Don't forget to learn every day!",
+        // When our notification will be processed by our app
+        // 'data' can be any key value
+        data: { success: true },
+      },
+      // when our notification will trigger
+      trigger: {
+        seconds: 5,
+      },
+    });
+  };
+
   return (
     // using FlatList instead of ScrollView because it lazy-loads its elements
     <>
+      <Button text="Notify" onPress={scheduleNotification} />
       {/* Showing activity indicator when courses are loading */}
       {isLoading && (
         <ActivityIndicator
