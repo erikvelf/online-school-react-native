@@ -6,6 +6,17 @@ import { Colors, Fonts } from "../../shared/tokens";
 import { MenuButton } from "../../features/layout/ui/MenuButton/MenuButton";
 import { CustomDrawer } from "../../widget/layout/ui/CustomDrawer/CustomDrawer";
 import React from "react";
+import * as Notifications from "expo-notifications";
+
+Notifications.setNotificationHandler({
+  // NOTE that the object is wrapped in '()' to tell that the function returns an object
+  handleNotification: async () => ({
+    // an object that tells how do we handle notifications
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+    shouldShowAlert: true,
+  }),
+});
 
 export default function AppLayout() {
   // Promp user to login if he isn't (without rendering the rest of the page)
