@@ -35,7 +35,29 @@ export default function MyCoursesPage() {
     );
   };
 
-  const scheduleNotification = () => {
+  const requestPermissions = async () => {
+    return Notifications.requestPermissionsAsync({
+      ios: {
+        allowAlert: true,
+        allowSound: true,
+        allowBadge: true,
+      },
+    });
+  };
+
+  const allowsNotification = async () => {
+    const settings = await Notifications.getPermissionsAsync();
+    return (
+      settings.granted ||
+      settings.ios?.status == Notifications.IosAuthorizationStatus.PROVISIONAL
+    );
+  };
+
+  const scheduleNotification = async () => {
+    const granted = await allowsNotification();
+    if (!granted) {
+      await requestPermissions();
+    }
     Notifications.scheduleNotificationAsync({
       content: {
         title: "Don't forget to leart this course",
@@ -46,9 +68,11 @@ export default function MyCoursesPage() {
       },
       // when our notification will trigger
       trigger: {
+        type: "timeInterval",
         seconds: 5,
       },
     });
+    console.log("notification scheduled");
   };
 
   return (
