@@ -1,5 +1,5 @@
 import * as Notifications from "expo-notifications";
-import React from "react";
+import React, { useEffect } from "react";
 
 export function Notification() {
   Notifications.setNotificationHandler({
@@ -11,5 +11,18 @@ export function Notification() {
       shouldShowAlert: true,
     }),
   });
+
+  useEffect(() => {
+    const sub = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        console.log(notification.request.content.data);
+      },
+    );
+
+    return () => {
+      sub.remove();
+    };
+  }, []);
+
   return <></>;
 }
