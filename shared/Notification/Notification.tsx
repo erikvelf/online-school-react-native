@@ -13,14 +13,20 @@ export function Notification() {
   });
 
   useEffect(() => {
-    const sub = Notifications.addNotificationReceivedListener(
+    const subReceived = Notifications.addNotificationReceivedListener(
       (notification) => {
         console.log(notification.request.content.data);
       },
     );
 
+    const subResponseReceived =
+      Notifications.addNotificationResponseReceivedListener((notification) => {
+        console.log(notification);
+      });
+
     return () => {
-      sub.remove();
+      subReceived.remove();
+      subResponseReceived.remove();
     };
   }, []);
 
