@@ -60,11 +60,11 @@ export default function MyCoursesPage() {
     }
     Notifications.scheduleNotificationAsync({
       content: {
-        title: "Don't forget to leart this course",
-        body: "Don't forget to learn every day!",
+        title: "New TypeScript",
+        body: "Start learning now!",
         // When our notification will be processed by our app
         // 'data' can be any key value
-        data: { success: true },
+        data: { alias: "typescript" },
       },
       // when our notification will trigger
       trigger: {

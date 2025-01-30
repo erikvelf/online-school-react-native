@@ -1,7 +1,9 @@
 import * as Notifications from "expo-notifications";
+import { useRouter } from "expo-router";
 import React, { useEffect } from "react";
 
 export function Notification() {
+  const router = useRouter();
   Notifications.setNotificationHandler({
     // NOTE that the object is wrapped in '()' to tell that the function returns an object
     handleNotification: async () => ({
@@ -21,7 +23,8 @@ export function Notification() {
 
     const subResponseReceived =
       Notifications.addNotificationResponseReceivedListener((notification) => {
-        console.log(notification);
+        const courseAlias = notification.notification.request.content.alias;
+        router.push(`/(app)/course/${courseAlias}`);
       });
 
     return () => {
