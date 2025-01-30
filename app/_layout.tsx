@@ -7,6 +7,7 @@ import {
   SafeAreaProvider,
   useSafeAreaInsets,
 } from "react-native-safe-area-context";
+import { Notification } from "../shared/Notification/Notification";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -32,10 +33,9 @@ export default function RootLayout() {
 
   return (
     <SafeAreaProvider>
-      {/* Slot is a placeholder to load any page that now is rendered in the layout */}
-      {/* <Slot/> */}
-      {/* <Stack/> */}
-      {/* <Tabs /> */}
+      {/* Notification is a handler for in app notifications */}
+      <Notification />
+
       <StatusBar style="light" />
       <Stack
         screenOptions={{
