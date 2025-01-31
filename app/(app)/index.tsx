@@ -18,6 +18,8 @@ import { Colors } from "../../shared/tokens";
 import { Button } from "../../shared/Button/Button";
 // importing all code from expo-notifications
 import * as Notifications from "expo-notifications";
+import * as Device from "expo-device";
+import Constants from "expo-constants";
 
 export default function MyCoursesPage() {
   const { isLoading, error, courses } = useAtomValue(courseAtom);
@@ -57,6 +59,13 @@ export default function MyCoursesPage() {
     const granted = await allowsNotification();
     if (!granted) {
       await requestPermissions();
+    }
+    // isDevice checks if it is not an emulator
+    if (Device.isDevice) {
+      const token = await Notifications.getExpoPushTokenAsync({
+        projectId: Constants.expoConfig?.extra?.eas.projectId,
+      });
+      console.log(token);
     }
     Notifications.scheduleNotificationAsync({
       content: {
