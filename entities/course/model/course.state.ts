@@ -31,8 +31,6 @@ export const loadCourseAtom = atom(
         },
       });
 
-      console.log(data);
-
       set(courseAtom, {
         isLoading: false,
         courses: data.my,

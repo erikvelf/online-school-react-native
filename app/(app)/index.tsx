@@ -65,7 +65,6 @@ export default function MyCoursesPage() {
       const token = await Notifications.getExpoPushTokenAsync({
         projectId: Constants.expoConfig?.extra?.eas.projectId,
       });
-      console.log(token);
     }
     Notifications.scheduleNotificationAsync({
       content: {
@@ -81,7 +80,6 @@ export default function MyCoursesPage() {
         seconds: 5,
       },
     });
-    console.log("notification scheduled");
   };
 
   return (

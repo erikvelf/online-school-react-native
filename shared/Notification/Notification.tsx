@@ -17,7 +17,7 @@ export function Notification() {
   useEffect(() => {
     const subReceived = Notifications.addNotificationReceivedListener(
       (notification) => {
-        console.log(notification.request.content.data);
+        // console.log(notification.request.content.data);
       },
     );
 
