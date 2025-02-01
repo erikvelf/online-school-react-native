@@ -1,5 +1,4 @@
-import { View } from "react-native";
-import { StyleSheet } from "react-native";
+import { Share, View, StyleSheet } from "react-native";
 import ImageUploader from "../../shared/ImageUploader.tsx/ImageUploader";
 import { Button } from "../../shared/Button/Button";
 import { useEffect, useState } from "react";
@@ -7,7 +6,7 @@ import { Gaps } from "../../shared/tokens";
 import Avatar from "../../entities/user/ui/Avatar/Avatar";
 import { useAtom } from "jotai";
 import { updateProfileAtom } from "../../entities/user/model/user.state";
-import * as Sharing from "expo-sharing";
+// import * as Sharing from "expo-sharing";
 
 export default function Profile() {
   const [image, setImage] = useState<string | null>(null);
@@ -27,13 +26,11 @@ export default function Profile() {
   };
 
   const shareProfile = async () => {
-    const isSharingAvalilable = Sharing.isAvailableAsync();
-    if (!isSharingAvalilable) {
-      return;
-    }
-    await Sharing.shareAsync("https://purpleschool.ru", {
-      dialogTitle: "Share",
-    });
+    const shareOptions = {
+      title: "Share this awesome course platform",
+      message: "https://purpleschool.ru",
+    };
+    await Share.share(shareOptions);
   };
 
   return (
