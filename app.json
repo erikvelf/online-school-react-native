@@ -30,7 +30,9 @@
           "enableBackgroundRemoteNotifications": false
         }
       ],
-      ["expo-router"]
+      ["expo-router"],
+      "expo-image-picker",
+      { "photosPermission": "Necessary to select the profile image" }
     ],
     "ios": {
       "supportsTablet": false
