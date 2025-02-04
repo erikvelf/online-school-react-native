@@ -22,14 +22,17 @@ export const loadCourseAtom = atom(
         courses: [],
         error: null,
       });
-      const { data } = await axios.get<StudentCourseDescription[]>(API.my, {
-        params: {
-          studentCourse: "dontMy",
+      const { data } = await axios.get<{ my: StudentCourseDescription[] }>(
+        API.my,
+        {
+          params: {
+            studentCourse: "dontMy",
+          },
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         },
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
+      );
 
       set(courseAtom, {
         isLoading: false,
