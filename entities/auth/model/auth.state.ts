@@ -37,7 +37,7 @@ export const loginAtom = atom(
     try {
       await new Promise((resolve) =>
         setTimeout(() => {
-          resolve();
+          resolve(5);
         }, 2000),
       );
       const { data } = await axios.post<AuthResponse>(API.login, {
