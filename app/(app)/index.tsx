@@ -20,6 +20,7 @@ import { Button } from "../../shared/Button/Button";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import Constants from "expo-constants";
+import { SchedulableTriggerInputTypes } from "expo-notifications";
 
 export default function MyCoursesPage() {
   const { isLoading, error, courses } = useAtomValue(courseAtom);
@@ -76,7 +77,7 @@ export default function MyCoursesPage() {
       },
       // when our notification will trigger
       trigger: {
-        type: "timeInterval",
+        type: SchedulableTriggerInputTypes.TIME_INTERVAL,
         seconds: 5,
       },
     });
