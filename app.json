@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "native-app",
-    "slug": "native-app",
+    "slug": "purpleshcoolapp",
     "description": "App for the Purpleschool to learn courses (learning App using Expo and React Native)",
     "platforms": ["ios", "android"],
     "version": "1.0.0",
