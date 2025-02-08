@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "native-app",
-    "slug": "purpleshcoolapp",
+    "slug": "purpleschoolapp",
     "description": "App for the Purpleschool to learn courses (learning App using Expo and React Native)",
     "platforms": ["ios", "android"],
     "version": "1.0.0",
@@ -9,7 +9,11 @@
     "userInterfaceStyle": "light",
     "backgroundColor": "#16171D",
     "newArchEnabled": true,
-    "extra": { "eas": { "projectId": "3dcadacb-db3e-417f-8648-12fbcf27ff91" } },
+    "extra": {
+      "eas": {
+        "projectId": "3dcadacb-db3e-417f-8648-12fbcf27ff91"
+      }
+    },
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -17,21 +21,31 @@
       "primaryColor": "#6C38CC"
     },
     "plugins": [
+      "expo-router",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "./assets/fonts/FiraSans-Regular.ttf",
+            "./assets/fonts/FiraSans-SemiBold.ttf"
+          ]
+        }
+      ],
       [
         "expo-notifications",
         {
-          "icon": "./local/assets/notification_icon.png",
-          "color": "#ffffff",
-          "defaultChannel": "default",
-          "sounds": [
-            "./local/assets/notification_sound.wav",
-            "./local/assets/notification_sound_other.wav"
-          ],
-          "enableBackgroundRemoteNotifications": false
+          "icon": "./assets/notification-icon.png",
+          "color": "#16171D"
         }
       ],
-      ["expo-router"]
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Necessary to change profile's photo"
+        }
+      ]
     ],
+
     "ios": {
       "supportsTablet": false
     },
@@ -39,7 +53,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "ru.purpleschool.purpleappdemo.interik"
     },
     "web": {
       "favicon": "./assets/favicon.png"
