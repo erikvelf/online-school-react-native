@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet } from "react-native";
 import { Progress } from "../../model/course.model";
-import { Colors, Fonts, Gaps, Radius } from "../../../../shared/tokens";
+import { Colors, Fonts, Radius } from "../../../../shared/tokens";
 
 export function CourseProgress({
   progress,
