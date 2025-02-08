@@ -9,8 +9,6 @@ import {
   Padding,
   Radius,
 } from "../../../../shared/tokens";
-import MaskedView from "@react-native-masked-view/masked-view";
-import { LinearGradient } from "expo-linear-gradient";
 import { CourseProgress } from "../../../../entities/course/ui/CourseProgress/CourseProgress";
 import { TariffStatus } from "../../../../shared/Tariffs/Tariffs";
 
