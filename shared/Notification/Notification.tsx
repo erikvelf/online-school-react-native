@@ -15,12 +15,14 @@ export function Notification() {
   });
 
   useEffect(() => {
+    // to know if the user received the notification
     const subReceived = Notifications.addNotificationReceivedListener(
       (notification) => {
-        // console.log(notification.request.content.data);
+        console.log(notification.request.content.data);
       },
     );
 
+    // to know if the user clicked the notification
     const subResponseReceived =
       Notifications.addNotificationResponseReceivedListener((notification) => {
         const courseAlias = notification.notification.request.content.alias;
